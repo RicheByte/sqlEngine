@@ -32,7 +32,15 @@ class SQLiAutomator:
         self.scan_start_time = datetime.now()
         print("🔍 Starting SQL Injection Automation...")
         print(f"🎯 Target: {TARGET_URL}")
-        print(f"📝 Testing Parameters: {', '.join(TEST_PARAMS)}\n")
+        print(f"📝 Testing Parameters: {', '.join(TEST_PARAMS)}")
+        
+        # Show configuration
+        from config import MAX_PAYLOADS_PER_TEST, SKIP_DUPLICATE_PAYLOADS, SMART_PAYLOAD_ORDERING
+        print(f"\n⚙️  Configuration:")
+        print(f"   • Payload limit: {'Unlimited' if not MAX_PAYLOADS_PER_TEST else MAX_PAYLOADS_PER_TEST}")
+        print(f"   • Remove duplicates: {'Yes' if SKIP_DUPLICATE_PAYLOADS else 'No'}")
+        print(f"   • Smart ordering: {'Yes' if SMART_PAYLOAD_ORDERING else 'No'}")
+        print()
         
         # Validate target is reachable first
         if not self.http_client.test_connection(TARGET_URL):

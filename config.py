@@ -13,10 +13,17 @@ MAX_RETRIES = 2
 
 # Engine configurations
 TIME_DELAY_THRESHOLD = 3  # Seconds for time-based detection
-BOOLEAN_DIFFERENCE_THRESHOLD = 0.3  # Content difference threshold
+BOOLEAN_DIFFERENCE_THRESHOLD = 0.2  # Content difference threshold (lowered for better detection)
 
 # Payload configurations
-MAX_PAYLOADS_PER_TEST = 50  # Increased for comprehensive testing
+MAX_PAYLOADS_PER_TEST = None  # None = no limit, use all payloads from file
+SKIP_DUPLICATE_PAYLOADS = True  # Automatically remove duplicates
+PAYLOAD_ENCODING = 'utf-8'  # Encoding for payload files
+ALLOW_CUSTOM_PAYLOADS = True  # Allow inline payload definitions
+
+# Advanced payload options
+NORMALIZE_PAYLOADS = True  # Normalize whitespace and clean payloads
+SMART_PAYLOAD_ORDERING = True  # Order payloads by effectiveness (simple first, complex later)
 
 # Report configuration
 REPORT_TITLE = "SQL Injection Scan Report"

