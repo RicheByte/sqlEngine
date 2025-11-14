@@ -2,6 +2,9 @@
 
 A comprehensive, modular SQL injection testing framework designed for security professionals, developers, and ethical hackers. This tool automates the detection of SQL injection vulnerabilities across multiple attack vectors with comprehensive payload coverage and professional reporting.
 
+
+![Demo video](/assets/video.gif)
+
 ##  Features
 
 ###  Core Capabilities
@@ -57,6 +60,10 @@ python main.py
 ```
 
 ### Configuration
+
+
+![configs](/assets/image.png)
+
 Edit `config.py` to customize your scan:
 
 ```python
@@ -108,7 +115,7 @@ sqli_automator/
 
 ##  Advanced Configuration
 
-### Custom Payloads - NEW & IMPROVED! 🎯
+### Custom Payloads - NEW & IMPROVED! 
 
 The tool now features **smart payload management** that makes it incredibly easy to work with new payloads:
 
@@ -203,6 +210,8 @@ self.session.proxies = {
 ```
 
 ##  Report Generation
+
+![Reports](/assets/report.png)
 
 The tool generates comprehensive HTML reports with:
 
